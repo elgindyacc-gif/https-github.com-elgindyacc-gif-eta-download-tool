@@ -4,608 +4,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETA Download Professional | الأداة المتطورة لتحميل فواتير الضرائب</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Outfit:wght@400;700&display=swap"
-        rel="stylesheet">
+    <title>ETA Download Professional | الذكاء الاصطناعي في خدمة المحاسبة</title>
+    <meta name="description"
+        content="الحل الرقمي الأكثر تطوراً للمحاسبين في مصر. أتمتة كاملة لتحميل وإدارة فواتير مصلحة الضرائب.">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- External Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        :root {
-            --primary: #0078d4;
-            --primary-light: #2b88d8;
-            --primary-dark: #ffffff;
-            --accent: #ffb900;
-            --white: #ffffff;
-            --bg: #0a0a0a;
-            --card-bg: #161616;
-            --text-main: #ffffff;
-            --text-muted: #a0a0a0;
-            --shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            --border: #222;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text-main);
-            line-height: 1.8;
-            overflow-x: hidden;
-        }
-
-        header {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-            font-weight: 900;
-            font-size: 1.6rem;
-            color: var(--primary-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo span {
-            color: var(--primary);
-        }
-
-        .hero {
-            padding: 200px 8% 100px;
-            text-align: center;
-            background: radial-gradient(circle at top right, rgba(0, 120, 212, 0.1), transparent), var(--bg);
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 25px;
-            color: var(--primary-dark);
-        }
-
-        .hero p {
-            font-size: 1.4rem;
-            color: var(--text-muted);
-            max-width: 800px;
-            margin: 0 auto 50px;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .btn {
-            padding: 18px 45px;
-            border-radius: 15px;
-            font-weight: 800;
-            text-decoration: none;
-            transition: 0.3s;
-            font-size: 1.1rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 10px 20px rgba(0, 120, 212, 0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-5px);
-            background: var(--primary-dark);
-        }
-
-        .main-img {
-            max-width: 1000px;
-            width: 90%;
-            margin: 60px auto 0;
-            border-radius: 30px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            display: block;
-        }
-
-        .features-grid {
-            padding: 100px 8%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            transition: 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
-            border-color: var(--primary);
-        }
-
-        .feature-card .icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 60px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-            color: var(--primary-dark);
-            text-align: center;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            text-align: center;
-        }
-
-        .contact-section {
-            background: linear-gradient(135deg, #004578, #0078d4);
-            padding: 100px 8%;
-            text-align: center;
-            color: white;
-            border-radius: 50px;
-            margin: 0 8% 100px;
-        }
-
-        .contact-section h2 {
-            font-size: 3rem;
-            margin-bottom: 30px;
-        }
-
-        .email-link {
-            background: white;
-            color: #004578;
-            padding: 20px 40px;
-            border-radius: 15px;
-            text-decoration: none;
-            font-weight: 900;
-            font-size: 1.4rem;
-            transition: 0.3s;
-        }
-
-        .email-link:hover {
-            background: var(--accent);
-            color: #000;
-        }
-
-        .testimonials-section {
-            padding: 100px 8%;
-            text-align: center;
-        }
-
-        .testimonials-section h2 {
-            font-size: 3rem;
-            color: var(--primary-dark);
-            margin-bottom: 50px;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .testi-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            text-align: right;
-            border-bottom: 5px solid transparent;
-            transition: 0.3s;
-            border: 1px solid var(--border);
-        }
-
-        .testi-card:hover {
-            transform: translateY(-10px);
-            border-bottom-color: var(--primary);
-        }
-
-        .stars {
-            color: var(--accent);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        .testi-text {
-            color: var(--text-main);
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            background: #252525;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            color: var(--primary-light);
-        }
-
-        .user-details h4 {
-            color: var(--primary-dark);
-            margin: 0;
-        }
-
-        .user-details span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Review System Styles */
-        .reviews-container {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: right;
-        }
-
-        .review-form {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 50px;
-            border: 1px solid var(--border);
-        }
-
-        .rating-input {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .rating-input input {
-            display: none;
-        }
-
-        .rating-input label {
-            font-size: 2.5rem;
-            color: #ddd;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .rating-input label:hover,
-        .rating-input label:hover~label,
-        .rating-input input:checked~label {
-            color: var(--accent);
-        }
-
-        .review-form input[type="text"],
-        .review-form textarea {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid var(--border);
-            background: #252525;
-            color: white;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .review-form input:focus,
-        .review-form textarea:focus {
-            border-color: var(--primary);
-        }
-
-        .review-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .review-item {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            animation: fadeIn 0.5s ease;
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .review-user {
-            font-weight: 800;
-            color: var(--primary-dark);
-            font-size: 1.2rem;
-        }
-
-        .review-stars {
-            color: var(--accent);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        footer {
-            text-align: center;
-            padding: 50px;
-            background: #050505;
-            border-top: 1px solid var(--border);
-            color: #666;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-        }
-    </style>
 </head>
 
 <body>
-    <header>
-        <div class="logo">📥 <span>ETA</span> Download</div>
+    <!-- Premium Navigation -->
+    <header id="main-nav">
+        <div class="container">
+            <nav class="nav-flex">
+                <a href="#" class="logo-wrap">
+                    <div class="logo-icon">📥</div>
+                    <div class="logo-text">ETA<span>Download</span></div>
+                </a>
+                <nav class="nav-flex">
+                    <a href="#" class="logo-wrap">
+                        <div class="logo-icon">📥</div>
+                        <div class="logo-text">ETA<span>Download</span></div>
+                    </a>
+                </nav>
+        </div>
     </header>
 
-    <section class="hero">
-        <h1>الاحترافية في استخراج <br> <span>بيانات الضرائب المصرية</span></h1>
-        <p>الأداة الأسرع والأكثر استقراراً لتحميل كافة الفواتير والإيصالات الإلكترونية بضغطة زر واحدة. توفير ساعات من
-            العمل المحاسبي اليدوي.</p>
-        <div class="btn-group">
-            <a href="https://chromewebstore.google.com/detail/njjmmcecjnkofeofbandcggaaecnldan"
-                class="btn btn-primary">تحميل الإضافة الآن 🚀</a>
-        </div>
-        <img src="screan shot.png" class="main-img" alt="ETA Tool">
-    </section>
+    <main>
+        <!-- Fluid Hero Section -->
+        <section class="hero-v2">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="hero-tag">✨ التطور الجديد في المحاسبة الرقمية</span>
+                    <h1>أتمتة <span class="accent-text">الفواتير</span> بذكاء لم يسبق له مثيل</h1>
+                    <p>وداعاً للطرق التقليدية. احصل على كافة بياناتك الضريبية بضغطة زر واحدة. سرعة، دقة، وأمان تام في
+                        مكان واحد.</p>
 
-    <section class="features-grid">
-        <div class="feature-card">
-            <div class="icon">⚡</div>
-            <h3>Nitro Mode</h3>
-            <p>سرعة خارقة باستخدام المعالجة المتوازية لجلب آلاف المستندات في ثوانٍ معدودة دون انتظار.</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">📊</div>
-            <h3>إكسيل احترافي</h3>
-            <p>تقارير منظمة تشمل كافة تفاصيل الضرائب، الأكواد، والعناوين بتنسيق محاسبي دقيق جاهز للمراجعة.</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">🔍</div>
-            <h3>دعم الإيصالات</h3>
-            <p>دعم كامل لمنظومة الإيصال الإلكتروني بكافة تفاصيلها، مما يجعلها الأداة الأشمل في السوق المصري.</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 24 24" fill="none"
-                    stroke="#d83b01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-            </div>
-            <h3>دعم ملفات PDF</h3>
-            <p>إمكانية تحميل الفواتير الفردية وحفظها بصيغة PDF مباشرة، مع دعم تجميعها في ملفات مضغوطة ZIP لسهولة
-                الأرشفة.</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">💾</div>
-            <h3>تخزين محلي</h3>
-            <p>حفظ البيانات على جهازك لسرعة الوصول إليها لاحقاً وتقليل الضغط على المنظومة.</p>
-        </div>
-    </section>
-
-    <section class="testimonials-section">
-        <h2>ماذا يقول خبراء المحاسبة؟</h2>
-        <div class="testimonials-grid">
-            <div class="testi-card">
-                <div class="stars">★★★★★</div>
-                <p class="testi-text">"أداة مذهلة وفرت عليّ ساعات من العمل اليومي. دقة البيانات وسرعة التحميل لا تصدق."
-                </p>
-                <div class="user-info">
-                    <div class="user-avatar">أ.م</div>
-                    <div class="user-details">
-                        <h4>أحمد محمود</h4>
-                        <span>مدير حسابات</span>
+                    <div class="hero-btns">
+                        <a href="https://chromewebstore.google.com/detail/njjmmcecjnkofeofbandcggaaecnldan"
+                            class="btn-main">
+                            <span style="font-size: 1.4rem;">🚀</span>
+                            ابدأ التجربة المجانية الآن
+                        </a>
                     </div>
                 </div>
-            </div>
-            <div class="testi-card">
-                <div class="stars">★★★★★</div>
-                <p class="testi-text">"أفضل إضافة تعاملت معها على الإطلاق. دعم PDF وتجميع الملفات في ZIP جعل الأرشفة
-                    سهلة جداً."</p>
-                <div class="user-info">
-                    <div class="user-avatar">س.ع</div>
-                    <div class="user-details">
-                        <h4>سارة علي</h4>
-                        <span>محاسب قانوني</span>
-                    </div>
-                </div>
-            </div>
-            <div class="testi-card">
-                <div class="stars">★★★★★</div>
-                <p class="testi-text">"الـ Nitro Mode حقيقي! قمت بتحميل 5000 فاتورة في دقيقة واحدة. أنصح بها كل مكاتب
-                    المحاسبة."</p>
-                <div class="user-info">
-                    <div class="user-avatar">م.هـ</div>
-                    <div class="user-details">
-                        <h4>محمود هاشم</h4>
-                        <span>مستشار ضريبي</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="contact-section">
-        <h2>هل لديك أي استفسار؟</h2>
-        <p style="margin-bottom: 40px; opacity: 0.8; font-size: 1.2rem;">نحن هنا لمساعدتك في الحصول على أفضل تجربة رقمية
-            لمحاسبتك.</p>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=elgindy.acc@gmail.com" target="_blank"
-            class="email-link">📧 elgindy.acc@gmail.com</a>
-    </section>
-
-    <section id="reviews-section" style="padding: 100px 8%; background: var(--bg);">
-        <h2 style="text-align: center; font-size: 3rem; color: var(--primary-dark); margin-bottom: 50px;">آراء وملاحظات
-            المستخدمين ⭐</h2>
-
-        <div class="reviews-container">
-            <!-- Review Form -->
-            <div class="review-form">
-                <h3 style="margin-bottom: 20px;">أضف تقييمك</h3>
-                <div class="rating-input">
-                    <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
-                    <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
-                    <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
-                    <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
-                    <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
-                </div>
-                <input type="text" id="reviewer-name" placeholder="الاسم الكامل">
-                <textarea id="review-content" rows="4" placeholder="اكتب رأيك هنا..."></textarea>
-                <button onclick="submitReview()" class="btn btn-primary"
-                    style="width: 100%; border: none; cursor: pointer;">نشر التقييم 🚀</button>
-            </div>
-
-            <!-- Reviews List -->
-            <div id="review-list" class="review-list">
-                <!-- Reviews will be loaded here -->
-            </div>
-        </div>
-
-        <script>
-            // Supabase Configuration
-            const SUPABASE_URL = 'https://buvvzcgughfahhgufebm.supabase.co';
-            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1dnZ6Y2d1Z2hmYWhoZ3VmZWJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0Mzc0MjYsImV4cCI6MjA4MjAxMzQyNn0.7VSHMGPGw-2kGsmLB2o15hduYNJNY-_dEudD0rCOA90';
-            const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-            async function loadReviews() {
-                const list = document.getElementById('review-list');
-                list.innerHTML = '<p style="text-align:center; padding: 20px;">جاري تحميل التعليقات... 🔃</p>';
-
-                try {
-                    const { data, error } = await _supabase
-                        .from('reviews')
-                        .select('*')
-                        .order('created_at', { ascending: false });
-
-                    if (error) throw error;
-
-                    if (!data || data.length === 0) {
-                        list.innerHTML = '<p style="text-align:center; padding: 20px; opacity: 0.6;">لا توجد تعليقات بعد. كن أول من يشاركنا رأيه! 😊</p>';
-                        return;
-                    }
-
-                    list.innerHTML = data.map(r => `
-                        <div class="review-item">
-                            <div class="review-header">
-                                <div class="review-user">${r.name}</div>
-                                <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                <div class="hero-visual">
+                    <div class="mockup-wrapper">
+                        <img src="screan shot.png" alt="ETA UI Preview">
+                        <!-- Floating Micro-UI elements -->
+                        <div class="floating-card" style="top: -20px; right: -40px;">
+                            <div
+                                style="background: #22c55e; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                ✓</div>
+                            <div>
+                                <div style="font-weight: 800; font-size: 0.8rem;">تم التحميل بنجاح</div>
+                                <div style="font-size: 0.7rem; color: #64748b;">1,240 فاتورة في 3 ثوانٍ</div>
                             </div>
-                            <p>${r.content}</p>
                         </div>
-                    `).join('');
-                } catch (err) {
-                    console.error('Error loading reviews:', err);
-                    list.innerHTML = '<p style="text-align:center; padding: 20px; color: #ff4d4d;">عذراً، حدث خطأ أثناء تحميل التعليقات. تأكد من تفعيل الجدول في Supabase.</p>';
-                }
-            }
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            async function submitReview() {
-                const name = document.getElementById('reviewer-name').value;
-                const content = document.getElementById('review-content').value;
-                const ratingInput = document.querySelector('input[name="rating"]:checked');
-                const rating = ratingInput ? ratingInput.value : null;
+        <!-- Feature Showcase (Fluid Rows) -->
+        <section class="section-v2">
+            <div class="container">
+                <!-- Row 1: Excel Reports -->
+                <div class="showcase-row">
+                    <div class="showcase-visual" style="background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);">
+                        <span style="filter: drop-shadow(0 20px 30px rgba(79, 70, 229, 0.2));">📊</span>
+                    </div>
+                    <div class="showcase-text">
+                        <div class="showcase-num">01</div>
+                        <h2>تقارير إكسل <span style="color: var(--brand);">دقيقة واحترافية</span></h2>
+                        <p>استخرج تقارير إكسل مفصلة لجميع الفواتير والإيصالات بضغطة زر. تتضمن التقارير كافة تفاصيل
+                            الضرائب، الخصومات، والبيانات المالية بدقة متناهية توافق معايير المحاسبة المصرية.</p>
+                    </div>
+                </div>
 
-                if (!name || !content || !rating) {
-                    alert('يرجى ملء جميع الحقول واختيار التقييم!');
-                    return;
-                }
+                <!-- Row 2: PDF Downloads -->
+                <div class="showcase-row">
+                    <div class="showcase-visual" style="background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);">
+                        <span style="filter: drop-shadow(0 20px 30px rgba(225, 29, 72, 0.2));">📄</span>
+                    </div>
+                    <div class="showcase-text">
+                        <div class="showcase-num">02</div>
+                        <h2>تحميل الفواتير بصيغة <span style="color: #e11d48;">PDF</span></h2>
+                        <p>لا داعي لتحميل كل فاتورة على حدة من موقع الضرائب. قم بتحميل مئات الفواتير دفعة واحدة بصيغة
+                            PDF
+                            منظمة ومرتبة، مما يوفر ساعات من العمل اليدوي المرهق.</p>
+                    </div>
+                </div>
 
-                const btn = event.target;
-                const originalText = btn.innerHTML;
-                btn.disabled = true;
-                btn.innerHTML = 'جاري النشر... ✨';
+                <!-- Row 3: Local Storage / Caching -->
+                <div class="showcase-row">
+                    <div class="showcase-visual" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+                        <span style="filter: drop-shadow(0 20px 30px rgba(34, 197, 94, 0.2));">💾</span>
+                    </div>
+                    <div class="showcase-text">
+                        <div class="showcase-num">03</div>
+                        <h2>خاصية <span style="color: #22c55e;">التخزين الذكي</span></h2>
+                        <p>تعمل الإضافة على تخزين بيانات الفواتير محلياً لتسهيل وسرعة إعادة التحميل في أي وقت. لن تحتاج
+                            لإعادة جلب البيانات من السيرفر في كل مرة، مما يضمن أداءً فائق السرعة.</p>
+                    </div>
+                </div>
 
-                try {
-                    const { error } = await _supabase
-                        .from('reviews')
-                        .insert([{ name, content, rating: parseInt(rating) }]);
+                <!-- Row 4: Receipt Extraction -->
+                <div class="showcase-row">
+                    <div class="showcase-visual" style="background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);">
+                        <span style="filter: drop-shadow(0 20px 30px rgba(234, 179, 8, 0.2));">🧾</span>
+                    </div>
+                    <div class="showcase-text">
+                        <div class="showcase-num">04</div>
+                        <h2>دعم كامل لـ <span style="color: #ca8a04;">الإيصالات الإلكترونية</span></h2>
+                        <p>استخرج بيانات الإيصالات الإلكترونية بكل سهولة إلى ملفات إكسل منظمة. الأداة تدعم كافة أنواع
+                            المستندات في منظومة الضرائب لضمان تغطية شاملة لجميع معاملاتك.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    if (error) throw error;
+        <!-- Wall of Love -->
+        <section class="reviews-v2">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 3.5rem;">
+                    <h2 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 1rem;">تجارب واقعية من <span
+                            class="accent-text">شركاء النجاح</span></h2>
+                </div>
 
-                    // Reset form
-                    document.getElementById('reviewer-name').value = '';
-                    document.getElementById('review-content').value = '';
-                    document.querySelectorAll('input[name="rating"]').forEach(i => i.checked = false);
+                <div class="table-wrapper">
+                    <table class="modern-table">
+                        <tbody id="review-list">
+                            <!-- Dynamic Reviews -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-                    await loadReviews();
-                } catch (err) {
-                    console.error('Error submitting review:', err);
-                    alert('حدث خطأ أثناء النشر. تأكد من إنشاء جدول باسم reviews في Supabase.');
-                } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = originalText;
-                }
-            }
+        <!-- Elegant Submission -->
+        <section class="container">
+            <div class="submit-area">
+                <h3>نقدّر رأيك المهني.. أخبرنا عن تجربتك ✨</h3>
+                <div class="modern-form">
+                    <div class="rating" style="margin-bottom: 2rem;">
+                        <input type="radio" name="rating" id="r5" value="5"><label for="r5">★</label>
+                        <input type="radio" name="rating" id="r4" value="4"><label for="r4">★</label>
+                        <input type="radio" name="rating" id="r3" value="3"><label for="r3">★</label>
+                        <input type="radio" name="rating" id="r2" value="2"><label for="r2">★</label>
+                        <input type="radio" name="rating" id="r1" value="1"><label for="r1">★</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="reviewer-name" class="modern-input" placeholder="الاسم بالكامل">
+                    </div>
+                    <div class="input-group">
+                        <textarea id="review-content" class="modern-input" rows="4"
+                            placeholder="كيف ساعدتك الأداة في عملك اليومي؟"></textarea>
+                    </div>
+                    <button onclick="submitReview()" class="btn-main"
+                        style="width: 100%; justify-content: center; border: none; cursor: pointer;">
+                        تأكيد الإرسال
+                    </button>
+                </div>
+            </div>
+        </section>
 
-            window.onload = loadReviews;
-        </script>
-    </section>
+        <!-- Final Call -->
+        <section class="container" style="padding-bottom: 10rem; text-align: center;">
+            <div style="max-width: 700px; margin: 0 auto;">
+                <h2 style="font-size: 3rem; font-weight: 900; margin-bottom: 2rem;">جاهز للانتقال للمستقبل؟</h2>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=elgindy.acc@gmail.com" target="_blank"
+                    class="hero-tag" style="font-size: 1.2rem; cursor: pointer; text-decoration: none;">
+                    📧 تواصل معنا للاستفسارات التقنية
+                </a>
+            </div>
+        </section>
+    </main>
 
-    <footer>
-        <p>&copy; 2025 ETA Download Professional | جميع الحقوق محفوظة</p>
+    <footer
+        style="padding: 4rem 0; background: var(--bg-alt); text-align: center; border-top: 1px solid var(--slate-200);">
+        <div class="container">
+            <p style="color: var(--slate-600);">&copy; 2025 ETA Download Professional. جميع الحقوق محفوظة.</p>
+        </div>
     </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
 </body>
 
 </html>
