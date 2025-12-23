@@ -526,7 +526,7 @@
         <script>
             // Supabase Configuration
             const SUPABASE_URL = 'https://buvvzcgughfahhgufebm.supabase.co';
-            const SUPABASE_KEY = 'sb_publishable_7jZRzy9jWsWvDo-9CCmfeQ_jxLkP1cC'; // Note: User provided sb_publishable key
+            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1dnZ6Y2d1Z2hmYWhoZ3VmZWJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0Mzc0MjYsImV4cCI6MjA4MjAxMzQyNn0.7VSHMGPGw-2kGsmLB2o15hduYNJNY-_dEudD0rCOA90';
             const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
             async function loadReviews() {
@@ -590,7 +590,6 @@
                     document.querySelectorAll('input[name="rating"]').forEach(i => i.checked = false);
 
                     await loadReviews();
-                    alert('شكراً لتقييمك! تم النشر بنجاح ويظهر الآن للجميع. 🚀');
                 } catch (err) {
                     console.error('Error submitting review:', err);
                     alert('حدث خطأ أثناء النشر. تأكد من إنشاء جدول باسم reviews في Supabase.');
